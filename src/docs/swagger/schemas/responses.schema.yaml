@@ -1,0 +1,148 @@
+responses:
+  UnauthorizedError:
+    description: Token no proporcionado, inválido o expirado
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/ErrorResponse"
+        examples:
+          noToken:
+            summary: Token no proporcionado
+            value:
+              status: error
+              message: Unauthorized
+              errors: ["Missing or invalid token"]
+              meta: null
+          invalidToken:
+            summary: Token inválido
+            value:
+              status: error
+              message: Unauthorized
+              errors: ["Missing or invalid token"]
+              meta: null
+          expiredToken:
+            summary: Token expirado
+            value:
+              status: error
+              message: Invalid or expired refresh token
+              errors: ["Invalid or expired refresh token"]
+              meta: null
+
+  ForbiddenError:
+    description: Permisos insuficientes para realizar esta acción
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/ErrorResponse"
+        example:
+          status: error
+          message: Forbidden
+          errors: ["Insufficient permissions"]
+          meta: null
+
+  NotFoundError:
+    description: Recurso no encontrado
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/ErrorResponse"
+        examples:
+          userNotFound:
+            summary: Usuario no encontrado
+            value:
+              status: error
+              message: User not found
+              errors: ["User not found"]
+              meta: null
+          petNotFound:
+            summary: Mascota no encontrada
+            value:
+              status: error
+              message: Pet not found
+              errors: ["Pet not found"]
+              meta: null
+
+  ValidationError:
+    description: Error de validación de datos
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/ValidationErrorResponse"
+        example:
+          status: error
+          message: Validation error
+          errors:
+            - type: field
+              value: ""
+              msg: Campo inválido
+              path: campo
+              location: body
+          meta: null
+
+  ConflictError:
+    description: Conflicto con el estado actual del recurso
+    content:
+      application/json:
+        schema:
+          $ref: "#/components/schemas/ErrorResponse"
+        examples:
+          emailExists:
+            summary: Email ya registrado
+            value:
+              status: error
+              message: Email is already registered
+              errors: ["Email is already registered"]
+              meta: null
+          petNotAvailable:
+            summary: Mascota no disponible
+            value:
+              status: error
+              message: Pet is not available for adoption
+              errors: ["Pet is not available for adoption"]
+              meta: null
+
+parameters:
+  IdPathParam:
+    name: id
+    in: path
+    required: true
+    description: ID único del recurso
+    schema:
+      type: string
+      example: "507f1f77bcf86cd799439011"
+
+  ResetPasswordTokenParam:
+    name: token
+    in: query
+    required: true
+    description: Token de un solo uso para restablecer la contraseña
+    schema:
+      type: string
+      example: "8f4f2c5a0c3e4f2aa1c9b7d2"
+
+  RoleQueryParam:
+    name: role
+    in: query
+    required: false
+    description: Filtrar usuarios por rol
+    schema:
+      type: string
+      enum: [user, admin]
+
+  StatusQueryParam:
+    name: status
+    in: query
+    required: false
+    description: Filtrar mascotas por estado
+    schema:
+      type: string
+      enum: [available, adopted]
+
+  SpeciesQueryParam:
+    name: species
+    in: query
+    required: false
+    description: Filtrar mascotas por especie
+    schema:
+      type: string
+      example: Perro

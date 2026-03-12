@@ -1,0 +1,123 @@
+/api/pets:
+  get:
+    tags: [Mascotas]
+    summary: Listar mascotas
+    description: >
+      Obtiene la lista de mascotas registradas. Acceso público. Soporta
+      filtros por estado y especie.
+    parameters:
+      - $ref: "#/components/parameters/StatusQueryParam"
+      - $ref: "#/components/parameters/SpeciesQueryParam"
+    responses:
+      "200":
+        description: Lista de mascotas obtenida exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "400":
+        $ref: "#/components/responses/ValidationError"
+
+  post:
+    tags: [Mascotas]
+    summary: Crear una nueva mascota
+    description: >
+      Registra una nueva mascota en el sistema. Solo accesible por
+      administradores.
+    security:
+      - bearerAuth: []
+      - cookieAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PetCreateRequest"
+    responses:
+      "201":
+        description: Mascota creada exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "400":
+        $ref: "#/components/responses/ValidationError"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+      "403":
+        $ref: "#/components/responses/ForbiddenError"
+
+/api/pets/{id}:
+  get:
+    tags: [Mascotas]
+    summary: Obtener mascota por ID
+    description: Retorna los datos de una mascota específica. Acceso público.
+    parameters:
+      - $ref: "#/components/parameters/IdPathParam"
+    responses:
+      "200":
+        description: Mascota encontrada
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "404":
+        $ref: "#/components/responses/NotFoundError"
+
+  patch:
+    tags: [Mascotas]
+    summary: Actualizar mascota
+    description: >
+      Actualiza los datos de una mascota existente. Todos los campos son
+      opcionales. Solo accesible por administradores.
+    security:
+      - bearerAuth: []
+      - cookieAuth: []
+    parameters:
+      - $ref: "#/components/parameters/IdPathParam"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PetUpdateRequest"
+    responses:
+      "200":
+        description: Mascota actualizada exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "400":
+        $ref: "#/components/responses/ValidationError"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+      "403":
+        $ref: "#/components/responses/ForbiddenError"
+      "404":
+        $ref: "#/components/responses/NotFoundError"
+
+  delete:
+    tags: [Mascotas]
+    summary: Eliminar mascota
+    description: >
+      Elimina permanentemente una mascota del sistema. Solo accesible por
+      administradores.
+    security:
+      - bearerAuth: []
+      - cookieAuth: []
+    parameters:
+      - $ref: "#/components/parameters/IdPathParam"
+    responses:
+      "200":
+        description: Mascota eliminada exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+      "403":
+        $ref: "#/components/responses/ForbiddenError"
+      "404":
+        $ref: "#/components/responses/NotFoundError"

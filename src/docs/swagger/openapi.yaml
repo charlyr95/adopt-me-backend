@@ -1,0 +1,41 @@
+openapi: "3.0.0"
+
+info:
+  title: Pet Adoption API
+  version: "1.0.0"
+  description: |
+    # API de Adopción de Mascotas
+
+    Documentación práctica de los endpoints disponibles. La autenticación funciona con JWT por header o cookies HTTP-only.
+
+    Flujos recomendados:
+    - Registro y login: POST /api/auth/register, POST /api/auth/login
+    - Renovación de token: POST /api/auth/refresh
+    - Recuperación de contraseña: POST /api/auth/forgot-password y POST /api/auth/reset-password
+    - Consulta de mascotas: GET /api/pets (filtros opcionales)
+    - Adopción: POST /api/adoptions (requiere autenticación)
+
+tags:
+  - name: Autenticación
+    description: Registro, login, refresh, recuperación de contraseña y sesión
+  - name: Usuarios
+    description: CRUD de usuarios (solo administradores)
+  - name: Mascotas
+    description: Gestión de mascotas disponibles para adopción
+  - name: Adopciones
+    description: Registro y consulta de adopciones
+  - name: Salud
+    description: Estado del servicio
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "Token JWT en el header Authorization. Ejemplo: Authorization: Bearer <accessToken>"
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: accessToken
+      description: Token JWT almacenado en cookie HTTP-only

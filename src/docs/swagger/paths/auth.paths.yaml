@@ -1,0 +1,157 @@
+/api/auth/register:
+  post:
+    tags: [Autenticación]
+    summary: Registrar un nuevo usuario
+    description: >
+      Crea una nueva cuenta de usuario en el sistema. La contraseña será
+      hasheada con argon2 antes de almacenarse. Genera accessToken y
+      refreshToken que se envían en cookies HTTP-only.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserRegisterRequest"
+    responses:
+      "201":
+        description: Usuario registrado exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthResponse"
+      "400":
+        $ref: "#/components/responses/ValidationError"
+      "409":
+        $ref: "#/components/responses/ConflictError"
+
+/api/auth/login:
+  post:
+    tags: [Autenticación]
+    summary: Iniciar sesión
+    description: >
+      Autentica un usuario existente usando email y contraseña. Retorna
+      accessToken (15 min) y refreshToken (7 días) en la respuesta y
+      cookies HTTP-only.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserLoginRequest"
+    responses:
+      "200":
+        description: Login exitoso
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthResponse"
+      "400":
+        $ref: "#/components/responses/ValidationError"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+
+/api/auth/refresh:
+  post:
+    tags: [Autenticación]
+    summary: Renovar access token
+    description: >
+      Genera un nuevo accessToken usando un refreshToken válido. El
+      refreshToken puede venir del body o de cookies HTTP-only.
+    requestBody:
+      required: false
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RefreshTokenRequest"
+    responses:
+      "200":
+        description: Token renovado exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "400":
+        $ref: "#/components/responses/ValidationError"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+
+/api/auth/current:
+  get:
+    tags: [Autenticación]
+    summary: Obtener usuario autenticado
+    description: >
+      Retorna los datos del usuario actualmente autenticado basándose en
+      el accessToken.
+    security:
+      - bearerAuth: []
+      - cookieAuth: []
+    responses:
+      "200":
+        description: Datos del usuario actual
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+
+/api/auth/logout:
+  post:
+    tags: [Autenticación]
+    summary: Cerrar sesión
+    description: >
+      Cierra la sesión del usuario limpiando las cookies de autenticación
+      (accessToken y refreshToken).
+    responses:
+      "200":
+        description: Logout exitoso
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+
+/api/auth/forgot-password:
+  post:
+    tags: [Autenticación]
+    summary: Solicitar recuperación de contraseña
+    description: Envía un enlace o token de recuperación al email registrado.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ForgotPasswordRequest"
+    responses:
+      "200":
+        description: Solicitud registrada
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "400":
+        $ref: "#/components/responses/ValidationError"
+
+/api/auth/reset-password:
+  post:
+    tags: [Autenticación]
+    summary: Restablecer contraseña
+    description: Restablece la contraseña usando un token de un solo uso.
+    parameters:
+      - $ref: "#/components/parameters/ResetPasswordTokenParam"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ResetPasswordRequest"
+    responses:
+      "200":
+        description: Contraseña actualizada
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "400":
+        $ref: "#/components/responses/ValidationError"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"

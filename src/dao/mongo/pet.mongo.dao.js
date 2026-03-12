@@ -1,0 +1,33 @@
+import { PetModel } from './models/pet.model.js';
+
+export class PetMongoDAO {
+  async create(petData) {
+    const doc = await PetModel.create(petData);
+    return doc.toObject();
+  }
+
+  async createMany(petDataList) {
+    const docs = await PetModel.insertMany(petDataList);
+    return docs.map((doc) => doc.toObject());
+  }
+
+  async findById(id) {
+    return PetModel.findById(id).lean();
+  }
+
+  async findOne(filters) {
+    return PetModel.findOne(filters).lean();
+  }
+
+  async findAll(filters = {}) {
+    return PetModel.find(filters).lean();
+  }
+
+  async updateById(id, updateData) {
+    return PetModel.findByIdAndUpdate(id, updateData, { new: true }).lean();
+  }
+
+  async deleteById(id) {
+    return PetModel.findByIdAndDelete(id).lean();
+  }
+}

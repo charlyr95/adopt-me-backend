@@ -1,0 +1,41 @@
+Adoption:
+  type: object
+  properties:
+    id:
+      type: string
+      example: "507f1f77bcf86cd799439013"
+      description: ID único de la adopción
+    owner:
+      oneOf:
+        - type: string
+          example: "507f1f77bcf86cd799439011"
+        - $ref: "#/components/schemas/User"
+      description: ID o datos completos del adoptante
+    pet:
+      oneOf:
+        - type: string
+          example: "507f1f77bcf86cd799439012"
+        - $ref: "#/components/schemas/Pet"
+      description: ID o datos completos de la mascota adoptada
+    adoptionDate:
+      type: string
+      format: date-time
+      example: "2026-03-08T10:30:00.000Z"
+      description: Fecha de la adopción
+    createdAt:
+      type: string
+      format: date-time
+      example: "2026-03-08T10:30:00.000Z"
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2026-03-08T10:30:00.000Z"
+
+# AdoptionCreateRequest:
+#   type: object
+#   required: [petId]
+#   properties:
+#     petId:
+#       type: string
+#       example: "507f1f77bcf86cd799439012"
+#       description: ID de la mascota a adoptar (debe estar disponible)

@@ -1,0 +1,137 @@
+User:
+  type: object
+  properties:
+    id:
+      type: string
+      example: "507f1f77bcf86cd799439011"
+      description: ID único del usuario
+    first_name:
+      type: string
+      example: Juan
+      description: Nombre del usuario
+    last_name:
+      type: string
+      example: Pérez
+      description: Apellido del usuario
+    email:
+      type: string
+      format: email
+      example: juan.perez@example.com
+      description: Email único del usuario
+    role:
+      type: string
+      enum: [user, admin]
+      example: user
+      description: Rol del usuario en el sistema
+    pets:
+      type: array
+      items:
+        type: string
+      example: ["507f1f77bcf86cd799439011"]
+      description: Array de IDs de mascotas adoptadas por el usuario
+    createdAt:
+      type: string
+      format: date-time
+      example: "2026-03-08T10:30:00.000Z"
+      description: Fecha de creación del usuario
+    updatedAt:
+      type: string
+      format: date-time
+      example: "2026-03-08T10:30:00.000Z"
+      description: Fecha de última actualización
+
+# UserRegisterRequest:
+#   type: object
+#   required: [first_name, last_name, email, password]
+#   properties:
+#     first_name:
+#       type: string
+#       example: Juan
+#       description: Nombre del usuario
+#     last_name:
+#       type: string
+#       example: Pérez
+#       description: Apellido del usuario
+#     email:
+#       type: string
+#       format: email
+#       example: juan.perez@example.com
+#       description: Email único (será validado)
+#     password:
+#       type: string
+#       format: password
+#       minLength: 6
+#       example: SecurePass123
+#       description: Contraseña (mínimo 6 caracteres, será hasheada con argon2)
+
+# UserCreateRequest:
+#   type: object
+#   required: [first_name, last_name, email, password]
+#   properties:
+#     first_name:
+#       type: string
+#       example: Juan
+#       description: Nombre del usuario
+#     last_name:
+#       type: string
+#       example: Pérez
+#       description: Apellido del usuario
+#     email:
+#       type: string
+#       format: email
+#       example: juan.perez@example.com
+#       description: Email único (será validado)
+#     password:
+#       type: string
+#       format: password
+#       minLength: 6
+#       example: SecurePass123
+#       description: Contraseña (mínimo 6 caracteres, será hasheada con argon2)
+#     role:
+#       type: string
+#       enum: [user, admin]
+#       example: user
+#       description: Rol del usuario (opcional)
+
+# UserLoginRequest:
+#   type: object
+#   required: [email, password]
+#   properties:
+#     email:
+#       type: string
+#       format: email
+#       example: juan.perez@example.com
+#       description: Email del usuario
+#     password:
+#       type: string
+#       format: password
+#       example: SecurePass123
+#       description: Contraseña del usuario
+
+# UserUpdateRequest:
+#   type: object
+#   properties:
+#     first_name:
+#       type: string
+#       example: Juan Carlos
+#       description: Nuevo nombre del usuario
+#     last_name:
+#       type: string
+#       example: Pérez García
+#       description: Nuevo apellido del usuario
+#     email:
+#       type: string
+#       format: email
+#       example: juancarlos.perez@example.com
+#       description: Nuevo email del usuario
+#     password:
+#       type: string
+#       format: password
+#       minLength: 6
+#       example: NewSecurePass456
+#       description: Nueva contraseña (será hasheada)
+#     role:
+#       type: string
+#       enum: [user, admin]
+#       example: admin
+#       description: Nuevo rol del usuario

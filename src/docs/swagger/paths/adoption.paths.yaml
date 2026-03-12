@@ -1,0 +1,51 @@
+/api/adoptions:
+  get:
+    tags: [Adopciones]
+    summary: Listar adopciones
+    description: >
+      Obtiene la lista completa de adopciones con datos relacionados de
+      usuario y mascota. Requiere autenticación.
+    security:
+      - bearerAuth: []
+      - cookieAuth: []
+    responses:
+      "200":
+        description: Lista de adopciones obtenida exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+
+  post:
+    tags: [Adopciones]
+    summary: Crear adopción
+    description: >
+      Registra una nueva adopción para el usuario autenticado. Actualiza
+      automáticamente el estado de la mascota a "adopted" y la asigna al
+      usuario.
+    security:
+      - bearerAuth: []
+      - cookieAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/AdoptionCreateRequest"
+    responses:
+      "201":
+        description: Adopción creada exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "400":
+        $ref: "#/components/responses/ValidationError"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+      "404":
+        $ref: "#/components/responses/NotFoundError"
+      "409":
+        $ref: "#/components/responses/ConflictError"

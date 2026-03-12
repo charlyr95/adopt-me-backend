@@ -1,0 +1,12 @@
+/api/health:
+  get:
+    tags: [Salud]
+    summary: Chequeo de salud
+    description: Verifica que el servicio está activo y responde correctamente
+    responses:
+      "200":
+        description: Servicio operativo
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HealthResponse"

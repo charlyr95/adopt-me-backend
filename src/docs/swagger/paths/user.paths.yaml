@@ -1,0 +1,140 @@
+/api/users:
+  get:
+    tags: [Usuarios]
+    summary: Listar todos los usuarios
+    description: >
+      Obtiene la lista completa de usuarios registrados. Solo accesible
+      por administradores. Soporta filtro por rol.
+    security:
+      - bearerAuth: []
+      - cookieAuth: []
+    parameters:
+      - $ref: "#/components/parameters/RoleQueryParam"
+    responses:
+      "200":
+        description: Lista de usuarios obtenida exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+      "403":
+        $ref: "#/components/responses/ForbiddenError"
+
+  post:
+    tags: [Usuarios]
+    summary: Crear un nuevo usuario
+    description: >
+      Crea un nuevo usuario en el sistema (solo administradores). Similar
+      a /register pero requiere privilegios de admin.
+    security:
+      - bearerAuth: []
+      - cookieAuth: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserCreateRequest"
+    responses:
+      "201":
+        description: Usuario creado exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "400":
+        $ref: "#/components/responses/ValidationError"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+      "403":
+        $ref: "#/components/responses/ForbiddenError"
+      "409":
+        $ref: "#/components/responses/ConflictError"
+
+/api/users/{id}:
+  get:
+    tags: [Usuarios]
+    summary: Obtener usuario por ID
+    description: >
+      Retorna los datos de un usuario específico. Solo accesible por
+      administradores.
+    security:
+      - bearerAuth: []
+      - cookieAuth: []
+    parameters:
+      - $ref: "#/components/parameters/IdPathParam"
+    responses:
+      "200":
+        description: Usuario encontrado
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+      "403":
+        $ref: "#/components/responses/ForbiddenError"
+      "404":
+        $ref: "#/components/responses/NotFoundError"
+
+  patch:
+    tags: [Usuarios]
+    summary: Actualizar usuario
+    description: >
+      Actualiza los datos de un usuario existente. Todos los campos son
+      opcionales. Solo accesible por administradores.
+    security:
+      - bearerAuth: []
+      - cookieAuth: []
+    parameters:
+      - $ref: "#/components/parameters/IdPathParam"
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserUpdateRequest"
+    responses:
+      "200":
+        description: Usuario actualizado exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "400":
+        $ref: "#/components/responses/ValidationError"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+      "403":
+        $ref: "#/components/responses/ForbiddenError"
+      "404":
+        $ref: "#/components/responses/NotFoundError"
+      "409":
+        $ref: "#/components/responses/ConflictError"
+
+  delete:
+    tags: [Usuarios]
+    summary: Eliminar usuario
+    description: >
+      Elimina permanentemente un usuario del sistema. Solo accesible por
+      administradores.
+    security:
+      - bearerAuth: []
+      - cookieAuth: []
+    parameters:
+      - $ref: "#/components/parameters/IdPathParam"
+    responses:
+      "200":
+        description: Usuario eliminado exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+      "401":
+        $ref: "#/components/responses/UnauthorizedError"
+      "403":
+        $ref: "#/components/responses/ForbiddenError"
+      "404":
+        $ref: "#/components/responses/NotFoundError"

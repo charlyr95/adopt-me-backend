@@ -1,0 +1,27 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - MONGO_URI=mongodb://mongo:27017/adoptme
+      - PERSISTENCE=mongo
+      - JWT_ACCESS_SECRET=access-secret-dev
+      - JWT_REFRESH_SECRET=refresh-secret-dev
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  mongo:
+    image: mongo:7
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
