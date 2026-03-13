@@ -1,5 +1,5 @@
 process.env.NODE_ENV = 'test';
-process.env.PERSISTENCE = process.env.PERSISTENCE || 'mongo'; // mongo | memory | file
+process.env.PERSISTENCE = process.env.PERSISTENCE || 'memory'; // mongo | memory | file
 
 let connectDB;
 let disconnectDB;
@@ -7,10 +7,9 @@ let disconnectDB;
 exports.mochaHooks = {
   beforeAll: async function () {
     this.timeout(20000);
-    const dbModule = await import('../src/config/database.js');
-    ({ connectDB, disconnectDB } = dbModule);
-
     if (process.env.PERSISTENCE === 'mongo') {
+      const dbModule = await import('../src/config/database.js');
+      ({ connectDB, disconnectDB } = dbModule);
       await connectDB();
     }
   },
