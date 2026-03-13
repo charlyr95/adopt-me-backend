@@ -17,5 +17,10 @@ export const errorHandler = (error, req, res, next) => {
     errors = [error.message || 'Upload error'];
   }
 
+  if (error.name === 'CastError') {
+    statusCode = 404;
+    errors = [error.message || 'Resource not found'];
+  }
+
   res.status(statusCode).json(errorResponse(error.message || 'Internal server error', errors));
 };
