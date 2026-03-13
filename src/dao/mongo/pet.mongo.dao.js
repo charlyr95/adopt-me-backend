@@ -19,7 +19,15 @@ export class PetMongoDAO {
     return PetModel.findOne(filters).lean();
   }
 
-  async findAll(filters = {}) {
+  async findAll(filters = {}, { page, limit } = {}) {
+    if (page && limit) {
+      const skip = (page - 1) * limit;
+      const [data, total] = await Promise.all([
+        PetModel.find(filters).skip(skip).limit(limit).lean(),
+        PetModel.countDocuments(filters)
+      ]);
+      return { data, total };
+    }
     return PetModel.find(filters).lean();
   }
 

@@ -53,9 +53,22 @@ export class UserService {
     return UserResponseListDTO(users);
   }
 
-  async getAll(filters = {}) {
-    const users = await userRepository.getAll(filters);
-    return UserResponseListDTO(users);
+  async getAll(filters = {}, options = {}) {
+    const result = await userRepository.getAll(filters, options);
+
+    if (options.page && options.limit) {
+      return {
+        data: UserResponseListDTO(result.data),
+        meta: {
+          page: options.page,
+          limit: options.limit,
+          total: result.total,
+          totalPages: Math.ceil(result.total / options.limit)
+        }
+      };
+    }
+
+    return UserResponseListDTO(result);
   }
 
   async getById(id) {

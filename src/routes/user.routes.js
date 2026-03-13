@@ -16,7 +16,11 @@ router.get(
   '/',
   requireAuth,
   authorizeRoles('admin'),
-  validate([query('role').optional().isIn(['user', 'admin'])]),
+  validate([
+    query('role').optional().isIn(['user', 'admin']),
+    query('page').optional().isInt({ min: 1 }).toInt(),
+    query('limit').optional().isInt({ min: 1, max: 100 }).toInt()
+  ]),
   getUsers
 );
 

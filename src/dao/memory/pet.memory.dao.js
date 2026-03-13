@@ -31,10 +31,16 @@ export class PetMemoryDAO {
     );
   }
 
-  async findAll(filters = {}) {
-    return memoryStore.pets.filter((pet) =>
+  async findAll(filters = {}, { page, limit } = {}) {
+    const results = memoryStore.pets.filter((pet) =>
       Object.entries(filters).every(([key, value]) => pet[key] === value)
     );
+    if (page && limit) {
+      const total = results.length;
+      const skip = (page - 1) * limit;
+      return { data: results.slice(skip, skip + limit), total };
+    }
+    return results;
   }
 
   async updateById(id, updateData) {

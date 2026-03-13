@@ -14,8 +14,22 @@ export const getUsers = async (req, res, next) => {
   try {
     const filters = {};
     if (req.query.role) filters.role = req.query.role;
-    const users = await userService.getAll(filters);
-    res.json(successResponse('Users fetched successfully', users));
+
+    const options = {};
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    if (page > 0 && limit > 0) {
+      options.page = page;
+      options.limit = limit;
+    }
+
+    const result = await userService.getAll(filters, options);
+
+    if (result && result.meta) {
+      res.json(successResponse('Users fetched successfully', result.data, result.meta));
+    } else {
+      res.json(successResponse('Users fetched successfully', result));
+    }
   } catch (error) {
     next(error);
   }

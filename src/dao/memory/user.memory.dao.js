@@ -30,10 +30,16 @@ export class UserMemoryDAO {
     );
   }
 
-  async findAll(filters = {}) {
-    return memoryStore.users.filter((user) =>
+  async findAll(filters = {}, { page, limit } = {}) {
+    const results = memoryStore.users.filter((user) =>
       Object.entries(filters).every(([key, value]) => user[key] === value)
     );
+    if (page && limit) {
+      const total = results.length;
+      const skip = (page - 1) * limit;
+      return { data: results.slice(skip, skip + limit), total };
+    }
+    return results;
   }
 
   async updateById(id, updateData) {

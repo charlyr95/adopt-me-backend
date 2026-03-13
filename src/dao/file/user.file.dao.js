@@ -40,11 +40,17 @@ export class UserFileDAO extends BaseFileDAO {
     );
   }
 
-  async findAll(filters = {}) {
+  async findAll(filters = {}, { page, limit } = {}) {
     const users = await this._readAll();
-    return users.filter((user) =>
+    const results = users.filter((user) =>
       Object.entries(filters).every(([key, value]) => user[key] === value)
     );
+    if (page && limit) {
+      const total = results.length;
+      const skip = (page - 1) * limit;
+      return { data: results.slice(skip, skip + limit), total };
+    }
+    return results;
   }
 
   async updateById(id, updateData) {

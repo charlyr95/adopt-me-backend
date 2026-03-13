@@ -41,11 +41,17 @@ export class PetFileDAO extends BaseFileDAO {
     );
   }
 
-  async findAll(filters = {}) {
+  async findAll(filters = {}, { page, limit } = {}) {
     const pets = await this._readAll();
-    return pets.filter((pet) =>
+    const results = pets.filter((pet) =>
       Object.entries(filters).every(([key, value]) => pet[key] === value)
     );
+    if (page && limit) {
+      const total = results.length;
+      const skip = (page - 1) * limit;
+      return { data: results.slice(skip, skip + limit), total };
+    }
+    return results;
   }
 
   async updateById(id, updateData) {

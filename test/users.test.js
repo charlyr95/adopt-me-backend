@@ -174,6 +174,33 @@ describe('Usuarios - operaciones CRUD con control de roles', () => {
         expect(user.role).to.equal('admin');
       });
     });
+
+    it('lista usuarios paginados', async () => {
+      const res = await request(app)
+        .get('/api/users')
+        .query({ page: 1, limit: 2 })
+        .set('Authorization', `Bearer ${adminToken}`);
+
+      expect(res.status).to.equal(200);
+      expect(res.body.status).to.equal('success');
+      expect(res.body.data).to.be.an('array');
+      expect(res.body.data.length).to.be.at.most(2);
+      expect(res.body.meta).to.be.an('object');
+      expect(res.body.meta).to.have.property('page', 1);
+      expect(res.body.meta).to.have.property('limit', 2);
+      expect(res.body.meta).to.have.property('total').that.is.a('number');
+      expect(res.body.meta).to.have.property('totalPages').that.is.a('number');
+    });
+
+    it('rechaza paginación con parámetros inválidos', async () => {
+      const res = await request(app)
+        .get('/api/users')
+        .query({ page: 0, limit: -5 })
+        .set('Authorization', `Bearer ${adminToken}`);
+
+      expect(res.status).to.equal(400);
+      expect(res.body.status).to.equal('error');
+    });
   });
 
   describe('Consulta por id', () => {

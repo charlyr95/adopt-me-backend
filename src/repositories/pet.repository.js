@@ -20,9 +20,12 @@ export class PetRepository {
     return mapEntity(pet);
   }
 
-  async getAll(filters = {}) {
-    const pets = await this.petDAO.findAll(filters);
-    return pets.map(mapEntity);
+  async getAll(filters = {}, options = {}) {
+    const result = await this.petDAO.findAll(filters, options);
+    if (result && result.data) {
+      return { data: result.data.map(mapEntity), total: result.total };
+    }
+    return result.map(mapEntity);
   }
 
   async updateById(id, updateData) {

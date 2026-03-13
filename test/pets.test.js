@@ -129,7 +129,26 @@ describe('Mascotas - gestión y permisos', () => {
       expect(res.body.status).to.equal('success');
       expect(res.body.data).to.be.an('array');
       expect(res.body.data[0]).to.have.property('status', 'available');
-    });    
+    });
+
+    it('obtiene mascotas paginadas', async () => {
+      const res = await request(app).get('/api/pets').query({ page: 1, limit: 1 });
+      expect(res.status).to.equal(200);
+      expect(res.body.status).to.equal('success');
+      expect(res.body.data).to.be.an('array');
+      expect(res.body.data.length).to.be.at.most(1);
+      expect(res.body.meta).to.be.an('object');
+      expect(res.body.meta).to.have.property('page', 1);
+      expect(res.body.meta).to.have.property('limit', 1);
+      expect(res.body.meta).to.have.property('total').that.is.a('number');
+      expect(res.body.meta).to.have.property('totalPages').that.is.a('number');
+    });
+
+    it('rechaza paginación con parámetros inválidos', async () => {
+      const res = await request(app).get('/api/pets').query({ page: -1, limit: 0 });
+      expect(res.status).to.equal(400);
+      expect(res.body.status).to.equal('error');
+    });
 
     it('obtiene mascota por id', async () => {
       const res = await request(app).get(`/api/pets/${createdPetId}`);

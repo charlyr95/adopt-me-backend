@@ -28,8 +28,21 @@ export const getPets = async (req, res, next) => {
     if (req.query.status) filters.status = req.query.status;
     if (req.query.species) filters.species = req.query.species;
 
-    const pets = await petService.getAll(filters);
-    res.json(successResponse('Pets fetched successfully', pets));
+    const options = {};
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    if (page > 0 && limit > 0) {
+      options.page = page;
+      options.limit = limit;
+    }
+
+    const result = await petService.getAll(filters, options);
+
+    if (result && result.meta) {
+      res.json(successResponse('Pets fetched successfully', result.data, result.meta));
+    } else {
+      res.json(successResponse('Pets fetched successfully', result));
+    }
   } catch (error) {
     next(error);
   }

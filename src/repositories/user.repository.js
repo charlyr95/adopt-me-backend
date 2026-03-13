@@ -25,9 +25,12 @@ export class UserRepository {
     return mapEntity(user);
   }
 
-  async getAll(filters = {}) {
-    const users = await this.userDAO.findAll(filters);
-    return users.map(mapEntity);
+  async getAll(filters = {}, options = {}) {
+    const result = await this.userDAO.findAll(filters, options);
+    if (result && result.data) {
+      return { data: result.data.map(mapEntity), total: result.total };
+    }
+    return result.map(mapEntity);
   }
 
   async updateById(id, updateData) {

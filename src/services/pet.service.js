@@ -19,9 +19,22 @@ export class PetService {
     return PetResponseListDTO(created);
   }
 
-  async getAll(filters = {}) {
-    const pets = await petRepository.getAll(filters);
-    return PetResponseListDTO(pets);
+  async getAll(filters = {}, options = {}) {
+    const result = await petRepository.getAll(filters, options);
+
+    if (options.page && options.limit) {
+      return {
+        data: PetResponseListDTO(result.data),
+        meta: {
+          page: options.page,
+          limit: options.limit,
+          total: result.total,
+          totalPages: Math.ceil(result.total / options.limit)
+        }
+      };
+    }
+
+    return PetResponseListDTO(result);
   }
 
   async getById(id) {

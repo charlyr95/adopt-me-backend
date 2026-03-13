@@ -19,7 +19,15 @@ export class UserMongoDAO {
     return UserModel.findOne(filters).lean();
   }
 
-  async findAll(filters = {}) {
+  async findAll(filters = {}, { page, limit } = {}) {
+    if (page && limit) {
+      const skip = (page - 1) * limit;
+      const [data, total] = await Promise.all([
+        UserModel.find(filters).skip(skip).limit(limit).lean(),
+        UserModel.countDocuments(filters)
+      ]);
+      return { data, total };
+    }
     return UserModel.find(filters).lean();
   }
 
