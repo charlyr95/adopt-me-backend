@@ -41,55 +41,55 @@ Pet:
       format: date-time
       example: "2026-03-08T10:30:00.000Z"
 
-# PetCreateRequest:
-#   type: object
-#   required: [name, species, breed, age]
-#   properties:
-#     name:
-#       type: string
-#       example: Max
-#       description: Nombre de la mascota
-#     species:
-#       type: string
-#       example: Perro
-#       description: Especie de la mascota
-#     breed:
-#       type: string
-#       example: Golden Retriever
-#       description: Raza de la mascota
-#     age:
-#       type: integer
-#       minimum: 0
-#       example: 3
-#       description: Edad de la mascota en años
-#     status:
-#       type: string
-#       enum: [available, adopted]
-#       example: available
-#       description: Estado inicial de la mascota (opcional)
+PetCreateRequest:
+  type: object
+  required: [name, species, breed, age]
+  properties:
+    name:
+      type: string
+      example: Max
+      description: Nombre de la mascota
+    species:
+      type: string
+      example: Perro
+      description: Especie de la mascota
+    breed:
+      type: string
+      example: Golden Retriever
+      description: Raza de la mascota
+    age:
+      type: integer
+      minimum: 0
+      example: 3
+      description: Edad de la mascota en años
+    status:
+      type: string
+      enum: [available, adopted]
+      example: available
+      description: Estado inicial de la mascota (opcional)
 
-# PetUpdateRequest:
-#   type: object
-#   properties:
-#     name:
-#       type: string
-#       example: Maximus
-#       description: Nuevo nombre de la mascota
-#     species:
-#       type: string
-#       example: Perro
-#       description: Nueva especie
-#     breed:
-#       type: string
-#       example: Labrador
-#       description: Nueva raza
-#     age:
-#       type: integer
-#       minimum: 0
-#       example: 4
-#       description: Nueva edad
-#     status:
-#       type: string
-#       enum: [available, adopted]
-#       example: adopted
-#       description: Nuevo estado
+PetUpdateRequest:
+  type: object
+  properties:
+    name:
+      type: string
+      example: Maximus
+      description: Nuevo nombre de la mascota
+    species:
+      type: string
+      example: Perro
+      description: Nueva especie
+    breed:
+      type: string
+      example: Labrador
+      description: Nueva raza
+    age:
+      type: integer
+      minimum: 0
+      example: 4
+      description: Nueva edad
+    status:
+      type: string
+      enum: [available, adopted]
+      example: adopted
+      description: Nuevo estado

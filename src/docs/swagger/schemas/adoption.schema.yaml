@@ -31,11 +31,11 @@ Adoption:
       format: date-time
       example: "2026-03-08T10:30:00.000Z"
 
-# AdoptionCreateRequest:
-#   type: object
-#   required: [petId]
-#   properties:
-#     petId:
-#       type: string
-#       example: "507f1f77bcf86cd799439012"
-#       description: ID de la mascota a adoptar (debe estar disponible)
+AdoptionCreateRequest:
+  type: object
+  required: [petId]
+  properties:
+    petId:
+      type: string
+      example: "507f1f77bcf86cd799439012"
+      description: ID de la mascota a adoptar (debe estar disponible)

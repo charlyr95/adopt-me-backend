@@ -1,158 +1,158 @@
-# AuthResponse:
-#   type: object
-#   properties:
-#     status:
-#       type: string
-#       example: success
-#     message:
-#       type: string
-#       example: Login successful
-#     data:
-#       type: object
-#       properties:
-#         accessToken:
-#           type: string
-#           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-#           description: Token de acceso JWT (expira en 15 minutos)
-#         refreshToken:
-#           type: string
-#           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-#           description: Token de refresh JWT (expira en 7 días)
-#         user:
-#           $ref: "#/components/schemas/User"
-#     meta:
-#       nullable: true
-#       example: null
+AuthResponse:
+  type: object
+  properties:
+    status:
+      type: string
+      example: success
+    message:
+      type: string
+      example: Login successful
+    data:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          description: Token de acceso JWT (expira en 15 minutos)
+        refreshToken:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          description: Token de refresh JWT (expira en 7 días)
+        user:
+          $ref: "#/components/schemas/User"
+    meta:
+      nullable: true
+      example: null
 
-# RefreshTokenRequest:
-#   type: object
-#   properties:
-#     refreshToken:
-#       type: string
-#       example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-#       description: Token de refresh (opcional si se envía en cookie)
+RefreshTokenRequest:
+  type: object
+  properties:
+    refreshToken:
+      type: string
+      example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+      description: Token de refresh (opcional si se envía en cookie)
 
-# ForgotPasswordRequest:
-#   type: object
-#   required: [email]
-#   properties:
-#     email:
-#       type: string
-#       format: email
-#       example: juan.perez@example.com
-#       description: Email registrado para enviar el enlace de recuperación
+ForgotPasswordRequest:
+  type: object
+  required: [email]
+  properties:
+    email:
+      type: string
+      format: email
+      example: juan.perez@example.com
+      description: Email registrado para enviar el enlace de recuperación
 
-# ResetPasswordRequest:
-#   type: object
-#   required: [password]
-#   properties:
-#     password:
-#       type: string
-#       format: password
-#       minLength: 6
-#       example: NuevaClave123
-#       description: Nueva contraseña (mínimo 6 caracteres)
+ResetPasswordRequest:
+  type: object
+  required: [password]
+  properties:
+    password:
+      type: string
+      format: password
+      minLength: 6
+      example: NuevaClave123
+      description: Nueva contraseña (mínimo 6 caracteres)
 
-# ValidationIssue:
-#   type: object
-#   properties:
-#     type:
-#       type: string
-#       example: field
-#     value:
-#       nullable: true
-#       example: ""
-#     msg:
-#       type: string
-#       example: Campo inválido
-#     path:
-#       type: string
-#       example: campo
-#     location:
-#       type: string
-#       example: body
+ValidationIssue:
+  type: object
+  properties:
+    type:
+      type: string
+      example: field
+    value:
+      nullable: true
+      example: ""
+    msg:
+      type: string
+      example: Campo inválido
+    path:
+      type: string
+      example: campo
+    location:
+      type: string
+      example: body
 
-# SuccessResponse:
-#   type: object
-#   properties:
-#     status:
-#       type: string
-#       example: success
-#     message:
-#       type: string
-#       example: Operation successful
-#     data:
-#       type: object
-#       description: Datos de la respuesta (varía según el endpoint)
-#     meta:
-#       nullable: true
-#       example: null
+SuccessResponse:
+  type: object
+  properties:
+    status:
+      type: string
+      example: success
+    message:
+      type: string
+      example: Operation successful
+    data:
+      type: object
+      description: Datos de la respuesta (varía según el endpoint)
+    meta:
+      nullable: true
+      example: null
 
-# ErrorResponse:
-#   type: object
-#   properties:
-#     status:
-#       type: string
-#       example: error
-#     message:
-#       type: string
-#       example: Unauthorized
-#     errors:
-#       type: array
-#       items:
-#         oneOf:
-#           - type: string
-#             example: Missing or invalid token
-#           - $ref: "#/components/schemas/ValidationIssue"
-#       description: Detalles del error
-#     meta:
-#       nullable: true
-#       example: null
+ErrorResponse:
+  type: object
+  properties:
+    status:
+      type: string
+      example: error
+    message:
+      type: string
+      example: Unauthorized
+    errors:
+      type: array
+      items:
+        oneOf:
+          - type: string
+            example: Missing or invalid token
+          - $ref: "#/components/schemas/ValidationIssue"
+      description: Detalles del error
+    meta:
+      nullable: true
+      example: null
 
-# ValidationErrorResponse:
-#   type: object
-#   properties:
-#     status:
-#       type: string
-#       example: error
-#     message:
-#       type: string
-#       example: Validation error
-#     errors:
-#       type: array
-#       items:
-#         $ref: "#/components/schemas/ValidationIssue"
-#     meta:
-#       nullable: true
-#       example: null
+ValidationErrorResponse:
+  type: object
+  properties:
+    status:
+      type: string
+      example: error
+    message:
+      type: string
+      example: Validation error
+    errors:
+      type: array
+      items:
+        $ref: "#/components/schemas/ValidationIssue"
+    meta:
+      nullable: true
+      example: null
 
-# HealthResponse:
-#   type: object
-#   properties:
-#     status:
-#       type: string
-#       example: success
-#     message:
-#       type: string
-#       example: API is running
-#     data:
-#       type: object
-#       properties:
-#         uptime:
-#           type: number
-#           example: 125.431
-#         cpu:
-#           type: object
-#           additionalProperties:
-#             type: number
-#         memory:
-#           type: object
-#           additionalProperties:
-#             type: number
-#         timestamp:
-#           type: string
-#           format: date-time
-#           example: "2026-03-11T10:30:00.000Z"
-#     meta:
-#       nullable: true
-#       example: null
+HealthResponse:
+  type: object
+  properties:
+    status:
+      type: string
+      example: success
+    message:
+      type: string
+      example: API is running
+    data:
+      type: object
+      properties:
+        uptime:
+          type: number
+          example: 125.431
+        cpu:
+          type: object
+          additionalProperties:
+            type: number
+        memory:
+          type: object
+          additionalProperties:
+            type: number
+        timestamp:
+          type: string
+          format: date-time
+          example: "2026-03-11T10:30:00.000Z"
+    meta:
+      nullable: true
+      example: null
