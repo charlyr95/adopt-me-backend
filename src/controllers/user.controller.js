@@ -14,6 +14,9 @@ export const getUsers = async (req, res, next) => {
   try {
     const filters = {};
     if (req.query.role) filters.role = req.query.role;
+    if (req.query.first_name) filters.first_name = req.query.first_name;
+    if (req.query.last_name) filters.last_name = req.query.last_name;
+    if (req.query.email) filters.email = req.query.email;
 
     const options = {};
     const page = parseInt(req.query.page);

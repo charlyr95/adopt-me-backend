@@ -10,6 +10,9 @@
       - cookieAuth: []
     parameters:
       - $ref: "#/components/parameters/RoleQueryParam"
+      - $ref: "#/components/parameters/FirstNameQueryParam"
+      - $ref: "#/components/parameters/LastNameQueryParam"
+      - $ref: "#/components/parameters/EmailQueryParam"
     responses:
       "200":
         description: Lista de usuarios obtenida exitosamente

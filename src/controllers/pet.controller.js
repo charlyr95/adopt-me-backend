@@ -27,6 +27,10 @@ export const getPets = async (req, res, next) => {
     const filters = {};
     if (req.query.status) filters.status = req.query.status;
     if (req.query.species) filters.species = req.query.species;
+    if (req.query.name) filters.name = req.query.name;
+    if (req.query.breed) filters.breed = req.query.breed;
+    if (req.query.age !== undefined && req.query.age !== '') filters.age = req.query.age;
+    if (req.query.owner) filters.owner = req.query.owner;
 
     const options = {};
     const page = parseInt(req.query.page);

@@ -146,3 +146,68 @@ parameters:
     schema:
       type: string
       example: Perro
+
+  NameQueryParam:
+    name: name
+    in: query
+    required: false
+    description: Filtrar mascotas por nombre
+    schema:
+      type: string
+      example: Firulais
+
+  BreedQueryParam:
+    name: breed
+    in: query
+    required: false
+    description: Filtrar mascotas por raza
+    schema:
+      type: string
+      example: Labrador
+
+  AgeQueryParam:
+    name: age
+    in: query
+    required: false
+    description: Filtrar mascotas por edad
+    schema:
+      type: integer
+      minimum: 0
+      example: 3
+
+  OwnerQueryParam:
+    name: owner
+    in: query
+    required: false
+    description: Filtrar mascotas por ID del dueño
+    schema:
+      type: string
+      example: "507f1f77bcf86cd799439011"
+
+  FirstNameQueryParam:
+    name: first_name
+    in: query
+    required: false
+    description: Filtrar usuarios por nombre
+    schema:
+      type: string
+      example: Juan
+
+  LastNameQueryParam:
+    name: last_name
+    in: query
+    required: false
+    description: Filtrar usuarios por apellido
+    schema:
+      type: string
+      example: Pérez
+
+  EmailQueryParam:
+    name: email
+    in: query
+    required: false
+    description: Filtrar usuarios por email
+    schema:
+      type: string
+      format: email
+      example: juan.perez@example.com

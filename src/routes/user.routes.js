@@ -18,6 +18,9 @@ router.get(
   authorizeRoles('admin'),
   validate([
     query('role').optional().isIn(['user', 'admin']),
+    query('first_name').optional().isString(),
+    query('last_name').optional().isString(),
+    query('email').optional().isString(),
     query('page').optional().isInt({ min: 1 }).toInt(),
     query('limit').optional().isInt({ min: 1, max: 100 }).toInt()
   ]),

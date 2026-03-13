@@ -8,6 +8,10 @@
     parameters:
       - $ref: "#/components/parameters/StatusQueryParam"
       - $ref: "#/components/parameters/SpeciesQueryParam"
+      - $ref: "#/components/parameters/NameQueryParam"
+      - $ref: "#/components/parameters/BreedQueryParam"
+      - $ref: "#/components/parameters/AgeQueryParam"
+      - $ref: "#/components/parameters/OwnerQueryParam"
     responses:
       "200":
         description: Lista de mascotas obtenida exitosamente
