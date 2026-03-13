@@ -24,11 +24,15 @@ export class UserMongoDAO {
   }
 
   async updateById(id, updateData) {
-    return UserModel.findByIdAndUpdate(id, updateData, { new: true }).lean();
+    return UserModel.findByIdAndUpdate(id, updateData, { returnDocument: 'after' }).lean();
   }
 
   async pushPet(userId, petId) {
-    return UserModel.findByIdAndUpdate(userId, { $addToSet: { pets: petId } }, { new: true }).lean();
+    return UserModel.findByIdAndUpdate(
+      userId,
+      { $addToSet: { pets: petId } },
+      { returnDocument: 'after' }
+    ).lean();
   }
 
   async deleteById(id) {

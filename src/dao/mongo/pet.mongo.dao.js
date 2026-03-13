@@ -24,7 +24,7 @@ export class PetMongoDAO {
   }
 
   async updateById(id, updateData) {
-    return PetModel.findByIdAndUpdate(id, updateData, { new: true }).lean();
+    return PetModel.findByIdAndUpdate(id, updateData, { returnDocument: 'after' }).lean();
   }
 
   async deleteById(id) {
