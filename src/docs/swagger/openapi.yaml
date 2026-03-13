@@ -4,16 +4,36 @@ info:
   title: Pet Adoption API
   version: "1.0.0"
   description: |
-    # API de Adopción de Mascotas
+    # 🐾 API de Adopción de Mascotas — Adopt Me
 
-    Documentación práctica de los endpoints disponibles. La autenticación funciona con JWT por header o cookies HTTP-only.
+    API RESTful diseñada para gestionar el proceso completo de adopción de mascotas.
+    Permite a los usuarios registrarse, explorar mascotas disponibles y solicitar adopciones,
+    mientras que los administradores pueden gestionar el catálogo de mascotas, usuarios y adopciones.
 
-    Flujos recomendados:
-    - Registro y login: POST /api/auth/register, POST /api/auth/login
-    - Renovación de token: POST /api/auth/refresh
-    - Recuperación de contraseña: POST /api/auth/forgot-password y POST /api/auth/reset-password
-    - Consulta de mascotas: GET /api/pets (filtros opcionales)
-    - Adopción: POST /api/adoptions (requiere autenticación)
+    ## 🔐 Autenticación
+    La API utiliza **JSON Web Tokens (JWT)** para la autenticación. Los tokens pueden enviarse de dos formas:
+    - **Header Authorization**: `Bearer <accessToken>`
+    - **Cookie HTTP-only**: se establece automáticamente en el login
+
+    Los access tokens tienen una vida corta (15 min por defecto) y pueden renovarse
+    mediante el endpoint de refresh sin necesidad de volver a iniciar sesión.
+
+    ## 📖 Flujos principales
+
+    | Flujo | Endpoints |
+    |-------|-----------|
+    | Registro y login | `POST /api/auth/register` → `POST /api/auth/login` |
+    | Explorar mascotas | `GET /api/pets` (soporta filtros por nombre, especie, raza, edad, estado y dueño) |
+    | Solicitar adopción | `POST /api/adoptions` (requiere autenticación) |
+    
+    ## 🛡️ Roles y permisos
+    - **user**: puede explorar mascotas, consultar su perfil y solicitar adopciones.
+    - **admin**: acceso completo, incluyendo la gestión de usuarios, mascotas y adopciones.
+
+    ## ⚙️ Notas técnicas
+    - Las respuestas siguen un formato unificado con los campos `status`, `message`, `data` y `meta`.
+    - Los listados soportan **paginación** mediante los query params `page` y `limit`.
+    - Se aplica **rate limiting** para proteger la API contra abusos.
 
 tags:
   - name: Autenticación
