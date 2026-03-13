@@ -271,11 +271,24 @@ Ahí encontrás la documentación interactiva generada a partir de los archivos 
 
 ## 🧪 Testing
 
-Los tests de integración están escritos con **Mocha**, **Chai** y **Supertest**. Usan persistencia en memoria (`memory`) para no depender de una base de datos externa.
+Los tests de integración están escritos con **Mocha**, **Chai** y **Supertest**. El setup global vive en `test/_setup.cjs` y se aplica vía `.mocharc.cjs`, donde se setea `NODE_ENV=test` y se conecta a Mongo cuando `PERSISTENCE=mongo`.
 
 ```bash
 # Ejecutar todos los tests
 npm test
+```
+
+Por defecto el setup usa `PERSISTENCE=memory`. Si querés usar otro motor:
+
+```bash
+# macOS/Linux
+PERSISTENCE=mongo npm test
+
+# Windows PowerShell
+$env:PERSISTENCE="mongo"; npm test
+
+# Windows CMD
+set PERSISTENCE=mongo && npm test
 ```
 
 Los archivos de test se encuentran en la carpeta `test/`:

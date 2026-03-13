@@ -8,9 +8,8 @@ describe("Adopciones - flujo de adopción y validaciones", () => {
   let user2Token;
   let petId;
 
-  before(async () => {
-    process.env.PERSISTENCE = 'memory';
-    process.env.NODE_ENV = 'test';
+  before(async function () {
+    this.timeout(20000);
 
     const appModule = await import("../src/app.js");
     app = appModule.default;

@@ -6,9 +6,8 @@ describe('Autenticación - flujo de credenciales y tokens', () => {
   let registeredEmail;
   let registeredPassword;
 
-  before(async () => {
-    process.env.PERSISTENCE = 'memory';
-    process.env.NODE_ENV = 'test';
+  before(async function () {
+    this.timeout(20000);
     process.env.JWT_ACCESS_SECRET = 'test-access-secret';
     process.env.JWT_REFRESH_SECRET = 'test-refresh-secret';
 
