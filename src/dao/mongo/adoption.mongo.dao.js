@@ -1,4 +1,5 @@
 import { AdoptionModel } from './models/adoption.model.js';
+import { toMongoFilters } from '../../utils/filters.js';
 
 export class AdoptionMongoDAO {
   async create(adoptionData) {
@@ -16,6 +17,6 @@ export class AdoptionMongoDAO {
   }
 
   async findAll(filters = {}) {
-    return AdoptionModel.find(filters).lean();
+    return AdoptionModel.find(toMongoFilters(filters)).lean();
   }
 }

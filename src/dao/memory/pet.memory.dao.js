@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import { memoryStore } from './store.js';
+import { caseInsensitiveMatch } from '../../utils/filters.js';
 
 export class PetMemoryDAO {
   async create(petData) {
@@ -26,14 +27,14 @@ export class PetMemoryDAO {
   async findOne(filters) {
     return (
       memoryStore.pets.find((pet) =>
-        Object.entries(filters).every(([key, value]) => pet[key] === value)
+        Object.entries(filters).every(([key, value]) => caseInsensitiveMatch(pet[key], value))
       ) || null
     );
   }
 
   async findAll(filters = {}, { page, limit } = {}) {
     const results = memoryStore.pets.filter((pet) =>
-      Object.entries(filters).every(([key, value]) => pet[key] === value)
+      Object.entries(filters).every(([key, value]) => caseInsensitiveMatch(pet[key], value))
     );
     if (page && limit) {
       const total = results.length;

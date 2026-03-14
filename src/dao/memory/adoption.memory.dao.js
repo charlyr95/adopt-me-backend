@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import { memoryStore } from './store.js';
+import { caseInsensitiveMatch } from '../../utils/filters.js';
 
 export class AdoptionMemoryDAO {
   async create(adoptionData) {
@@ -28,7 +29,7 @@ export class AdoptionMemoryDAO {
 
   async findAll(filters = {}) {
     return memoryStore.adoptions.filter((adoption) =>
-      Object.entries(filters).every(([key, value]) => adoption[key] === value)
+      Object.entries(filters).every(([key, value]) => caseInsensitiveMatch(adoption[key], value))
     );
   }
 }

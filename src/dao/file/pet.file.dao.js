@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import { BaseFileDAO } from './base.file.dao.js';
+import { caseInsensitiveMatch } from '../../utils/filters.js';
 
 export class PetFileDAO extends BaseFileDAO {
   constructor() {
@@ -36,7 +37,7 @@ export class PetFileDAO extends BaseFileDAO {
     const pets = await this._readAll();
     return (
       pets.find((pet) =>
-        Object.entries(filters).every(([key, value]) => pet[key] === value)
+        Object.entries(filters).every(([key, value]) => caseInsensitiveMatch(pet[key], value))
       ) || null
     );
   }
@@ -44,7 +45,7 @@ export class PetFileDAO extends BaseFileDAO {
   async findAll(filters = {}, { page, limit } = {}) {
     const pets = await this._readAll();
     const results = pets.filter((pet) =>
-      Object.entries(filters).every(([key, value]) => pet[key] === value)
+      Object.entries(filters).every(([key, value]) => caseInsensitiveMatch(pet[key], value))
     );
     if (page && limit) {
       const total = results.length;
