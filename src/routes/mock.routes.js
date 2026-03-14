@@ -20,17 +20,25 @@ router.get("/users/:count", (req, res) => {
   res.json(successResponse(users));
 });
 
-router.post( "/users", requireAuth, authorizeRoles("admin"), async (req, res) => {
-  const users = generateUsers();
-  const createdUsers = await userService.createMany(users);
-  res.json(successResponse(createdUsers));
+router.post("/users", requireAuth, authorizeRoles("admin"), async (req, res, next) => {
+  try {
+    const users = generateUsers();
+    const createdUsers = await userService.createMany(users);
+    res.json(successResponse(createdUsers));
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.post( "/users/:count", requireAuth, authorizeRoles("admin"), async (req, res) => {
-  const count = parseInt(req.params.count, 10);
-  const users = generateUsers(count);
-  const createdUsers = await userService.createMany(users);
-  res.json(successResponse(createdUsers));
+router.post("/users/:count", requireAuth, authorizeRoles("admin"), async (req, res, next) => {
+  try {
+    const count = parseInt(req.params.count, 10);
+    const users = generateUsers(count);
+    const createdUsers = await userService.createMany(users);
+    res.json(successResponse(createdUsers));
+  } catch (error) {
+    next(error);
+  }
 });
 
 // ------------- Pets -------------
@@ -45,17 +53,25 @@ router.get("/pets/:count", (req, res) => {
   res.json(successResponse(pets));
 });
 
-router.post("/pets", requireAuth, authorizeRoles("admin"), async (req, res) => {
-  const pets = generatePets();
-  const createdPets = await petService.createMany(pets);
-  res.json(successResponse(createdPets));
+router.post("/pets", requireAuth, authorizeRoles("admin"), async (req, res, next) => {
+  try {
+    const pets = generatePets();
+    const createdPets = await petService.createMany(pets);
+    res.json(successResponse(createdPets));
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.post( "/pets/:count", requireAuth, authorizeRoles("admin"), async (req, res) => {
-  const count = parseInt(req.params.count, 10);
-  const pets = generatePets(count);
-  const createdPets = await petService.createMany(pets);
-  res.json(successResponse(createdPets)); 
+router.post("/pets/:count", requireAuth, authorizeRoles("admin"), async (req, res, next) => {
+  try {
+    const count = parseInt(req.params.count, 10);
+    const pets = generatePets(count);
+    const createdPets = await petService.createMany(pets);
+    res.json(successResponse(createdPets));
+  } catch (error) {
+    next(error);
+  }
 });
 
 export default router;

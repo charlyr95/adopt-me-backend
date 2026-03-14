@@ -10,7 +10,7 @@ const router = Router();
 router.get(
   '/',
   validate([
-    query('status').optional().isIn(['available', 'adopted']),
+    query('status').optional().toLowerCase().isIn(['available', 'adopted']),
     query('species').optional().isString(),
     query('name').optional().isString(),
     query('breed').optional().isString(),
@@ -34,7 +34,7 @@ router.post(
     body('species').notEmpty(),
     body('breed').notEmpty(),
     body('age').isInt({ min: 0 }).toInt(),
-    body('status').optional().isIn(['available', 'adopted'])
+    body('status').optional().toLowerCase().isIn(['available', 'adopted'])
   ]),
   createPet
 );
@@ -46,7 +46,7 @@ router.patch(
   uploadPetPhotos.array('photos', 10),
   validate([
     param('id').notEmpty(),
-    body('status').optional().isIn(['available', 'adopted']),
+    body('status').optional().toLowerCase().isIn(['available', 'adopted']),
     body('age').optional().isInt({ min: 0 }).toInt()
   ]),
   updatePet

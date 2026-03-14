@@ -17,7 +17,7 @@ router.get(
   requireAuth,
   authorizeRoles('admin'),
   validate([
-    query('role').optional().isIn(['user', 'admin']),
+    query('role').optional().toLowerCase().isIn(['user', 'admin']),
     query('first_name').optional().isString(),
     query('last_name').optional().isString(),
     query('email').optional().isString(),
@@ -38,7 +38,7 @@ router.post(
     body('last_name').notEmpty().withMessage('last_name is required'),
     body('email').isEmail().withMessage('Valid email is required'),
     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
-    body('role').optional().isIn(['user', 'admin'])
+    body('role').optional().toLowerCase().isIn(['user', 'admin'])
   ]),
   createUser
 );
@@ -53,7 +53,7 @@ router.patch(
     body('last_name').optional().isString(),
     body('email').optional().isEmail(),
     body('password').optional().isLength({ min: 6 }),
-    body('role').optional().isIn(['user', 'admin'])
+    body('role').optional().toLowerCase().isIn(['user', 'admin'])
   ]),
   updateUser
 );

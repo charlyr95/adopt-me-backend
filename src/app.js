@@ -2,7 +2,6 @@ import express from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import passport from "passport";
-import swaggerUi from "swagger-ui-express";
 import helmet from "helmet";
 import cors from "cors";
 import { corsConfig } from "./config/cors.config.js";
@@ -13,8 +12,6 @@ import {
   notFoundHandler,
 } from "./middlewares/error.middleware.js";
 import apiRoutes from "./routes/_index.js";
-import { swaggerSpec } from "./docs/swagger/swagger.js";
-import { successResponse } from "./dto/response.dto.js";
 import { apiRateLimiter } from "./config/rate-limit.config.js";
 import { env } from "./config/env.config.js";
 
@@ -34,7 +31,6 @@ if (env.NODE_ENV !== "test") {
 initializePassport(passport);
 app.use(passport.initialize());
 app.use("/api", apiRoutes);
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(notFoundHandler);
 app.use(errorHandler);

@@ -8,13 +8,13 @@ export class PetDTO extends TimestampsEntity {
   constructor(pet) {
     super(pet);
     this.id = pet.id || pet._id || null;
-    this.status = pet.status || null;
-    this.owner = pet.owner || null;
-    this.name = pet.name || null;
-    this.age = pet.age || null;
-    this.species = pet.species || null;
-    this.breed = pet.breed || null;
-    this.description = pet.description || null;
+    this.status = pet.status ?? null;
+    this.owner = pet.owner ?? null;
+    this.name = pet.name ?? null;
+    this.age = pet.age ?? null;
+    this.species = pet.species ?? null;
+    this.breed = pet.breed ?? null;
+    this.description = pet.description ?? null;
     this.photos = pet.photos || [];
   }
 }
@@ -28,11 +28,11 @@ export class PetResponseDTO extends PetDTO {
 
 export class PetCreateDTO {
   constructor(pet) {
-    this.name = pet.name || "Unnamed";
-    this.age = pet.age || 0;
-    this.species = pet.species || "Unknown";
-    this.breed = pet.breed || "Unknown";
-    this.description = pet.description || "No description";
+    this.name = pet.name ?? "Unnamed";
+    this.age = pet.age ?? 0;
+    this.species = pet.species ?? "Unknown";
+    this.breed = pet.breed ?? "Unknown";
+    this.description = pet.description ?? "No description";
     this.photos = pet.photos || [];
   }
 }
