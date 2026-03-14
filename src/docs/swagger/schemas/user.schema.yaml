@@ -23,6 +23,12 @@ User:
       enum: [user, admin]
       example: user
       description: Rol del usuario en el sistema
+    last_connection:
+      type: string
+      format: date-time
+      nullable: true
+      example: "2026-03-14T11:45:00.000Z"
+      description: Fecha y hora de la última conexión del usuario
     pets:
       type: array
       items:

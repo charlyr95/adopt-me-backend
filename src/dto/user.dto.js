@@ -13,6 +13,7 @@ export class UserDTO extends TimestampsEntity {
     this.email = user.email || null;
     this.password = user.password || null;
     this.role = user.role || null;
+    this.last_connection = user.last_connection || null;
     this.pets = user.pets || [];
   }
 }
@@ -39,6 +40,7 @@ export class UserUpdateDTO {
     if (user.email !== undefined) this.email = user.email;
     if (user.password !== undefined) this.password = user.password;
     if (user.role !== undefined) this.role = user.role;
+    if (user.last_connection !== undefined) this.last_connection = user.last_connection;
     if (user.pets !== undefined) this.pets = user.pets;
   }
 }

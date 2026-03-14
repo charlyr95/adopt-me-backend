@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    last_connection: {
+      type: Date,
+      default: null,
+    },
     pets: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pet" }],
   },
   { timestamps: true },

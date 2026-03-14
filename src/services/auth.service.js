@@ -15,6 +15,13 @@ import { sendPasswordResetEmail } from "../utils/mailer.js";
 import { env } from "../config/env.config.js";
 
 export class AuthService {
+  async touchLastConnection(userId) {
+    if (!userId) return null;
+    return userRepository.updateById(userId, {
+      last_connection: new Date().toISOString(),
+    });
+  }
+
   async register(payload) {
     const existing = await userRepository.getByEmail(payload.email);
     if (existing) {

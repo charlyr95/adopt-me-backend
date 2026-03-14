@@ -38,7 +38,7 @@ router.post('/refresh', validate([body('refreshToken').optional()]), refresh);
 
 router.get('/current', requireAuth, currentUser);
 
-router.post('/logout', logout);
+router.post('/logout', requireAuth, logout);
 
 router.post(
   '/forgot-password',

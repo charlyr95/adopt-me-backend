@@ -9,7 +9,7 @@ export class UserFileDAO extends BaseFileDAO {
 
   async create(userData) {
     const users = await this._readAll();
-    const user = { id: crypto.randomUUID(), pets: [], ...userData };
+    const user = { id: crypto.randomUUID(), pets: [], last_connection: null, ...userData };
     users.push(user);
     await this._writeAll(users);
     return user;
@@ -20,6 +20,7 @@ export class UserFileDAO extends BaseFileDAO {
     const created = userDataList.map((userData) => ({
       id: crypto.randomUUID(),
       pets: [],
+      last_connection: null,
       ...userData
     }));
     users.push(...created);

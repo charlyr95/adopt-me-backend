@@ -35,7 +35,8 @@ export const login = (req, res, next) => {
           error.statusCode = 401;
           throw error;
         }
-        const userDTO = new UserResponseDTO(user);
+        const updatedUser = await authService.touchLastConnection(user.id || user._id);
+        const userDTO = new UserResponseDTO(updatedUser || user);
         const result = authService.buildAuthPayload(userDTO);
 
         // Set tokens in HTTP-only cookies
@@ -90,6 +91,7 @@ export const currentUser = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
+  await authService.touchLastConnection(req.user?.id || req.user?._id);
   res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
   res.json(successResponse("Logged out successfully", {}));

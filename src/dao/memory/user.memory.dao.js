@@ -4,7 +4,7 @@ import { caseInsensitiveMatch } from '../../utils/filters.js';
 
 export class UserMemoryDAO {
   async create(userData) {
-    const user = { id: crypto.randomUUID(), pets: [], ...userData };
+    const user = { id: crypto.randomUUID(), pets: [], last_connection: null, ...userData };
     memoryStore.users.push(user);
     return user;
   }
@@ -13,6 +13,7 @@ export class UserMemoryDAO {
     const users = userDataList.map((userData) => ({
       id: crypto.randomUUID(),
       pets: [],
+      last_connection: null,
       ...userData
     }));
     memoryStore.users.push(...users);
