@@ -2,6 +2,11 @@
 
 API REST para gestionar la adopción de mascotas. Permite registrar usuarios, administrar mascotas y procesar adopciones. Construida con **Express 5**, autenticación **JWT** (header + cookies HTTP-only), múltiples motores de persistencia y documentación interactiva con **Swagger**.
 
+![Node](https://img.shields.io/badge/node-20-green)
+![Docker](https://img.shields.io/badge/docker-ready-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+
 ---
 
 ## 📑 Tabla de contenidos
@@ -364,7 +369,23 @@ docker compose down
 
 Los datos de MongoDB se persisten en el volumen `mongo_data`.
 
----
+### Docker Image
+
+La imagen del proyecto se encuentra disponible en DockerHub:
+
+https://hub.docker.com/r/charlyr95/adopt-me-backend-api
+
+### Descargar la imagen
+
+```bash
+docker pull charlyr95/adopt-me-backend-api
+```
+### Ejecutar el contenedor
+
+```bash
+docker run -p 8080:8080 charlyr95/adopt-me-backend-api
+```
+
 
 ## 📄 Licencia
 
